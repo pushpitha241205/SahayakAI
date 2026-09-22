@@ -8,14 +8,16 @@ const ASSETS_TO_CACHE = [
   "/history.html",
   "/login.html",
   "/register.html",
+  "/manifest.json",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
   "/static/css/style.css",
   "/static/js/api.js",
   "/static/js/auth.js",
   "/static/js/location.js",
   "/static/js/voice.js",
   "/static/js/dashboard.js",
-  "/static/js/emergency.js",
-  "/static/manifest.json"
+  "/static/js/emergency.js"
 ];
 
 self.addEventListener("install", (event) => {

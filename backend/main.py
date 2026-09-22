@@ -106,6 +106,21 @@ frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "fr
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
 
+    @app.get("/manifest.json")
+    def serve_manifest():
+        return FileResponse(os.path.join(frontend_dir, "manifest.json"), media_type="application/manifest+json")
+
+    @app.get("/sw.js")
+    def serve_sw():
+        return FileResponse(os.path.join(frontend_dir, "sw.js"), media_type="application/javascript")
+
+    @app.get("/icons/{icon_name}")
+    def serve_icon(icon_name: str):
+        icon_path = os.path.join(frontend_dir, "icons", icon_name)
+        if os.path.exists(icon_path):
+            return FileResponse(icon_path, media_type="image/png")
+        return FileResponse(os.path.join(frontend_dir, "icons", "icon-192.png"), media_type="image/png")
+
     @app.get("/")
     def serve_index():
         return FileResponse(os.path.join(frontend_dir, "index.html"))
@@ -116,3 +131,4 @@ if os.path.exists(frontend_dir):
         if os.path.exists(file_path):
             return FileResponse(file_path)
         return FileResponse(os.path.join(frontend_dir, "index.html"))
+
