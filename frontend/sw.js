@@ -46,13 +46,23 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET" || event.request.url.includes("/api/")) {
-    return; // Pass through dynamic API calls
+    return; // Dynamic API calls are handled with local fallback in api.js
   }
 
+  // Cache first, falling back to network
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).catch(() => {
-        if (event.request.headers.get("accept").includes("text/html")) {
+    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return networkResponse;
+      }).catch(() => {
+        if (event.request.headers.get("accept") && event.request.headers.get("accept").includes("text/html")) {
           return caches.match("/dashboard.html");
         }
       });
