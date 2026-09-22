@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Contacts - Sahayak AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="container" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;">Trusted Emergency Contacts</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">These contacts are immediately notified whenever you trigger an SOS.</p>
+      </div>
+      <button id="show-add-contact-btn" class="btn btn-primary">+ Add New Contact</button>
+    </div>
+
+    <!-- Contact Form (Collapsible) -->
+    <div id="contact-form-card" class="card" style="display: none; margin-bottom: 2rem; border-color: var(--accent-blue);">
+      <h3 id="form-heading" style="margin-bottom: 1rem;">Add Emergency Contact</h3>
+      <form id="contact-form">
+        <input type="hidden" id="edit-contact-id">
+
+        <div class="grid" style="margin-top: 0; grid-template-columns: 1fr 1fr;">
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Contact Name</label>
+            <input type="text" id="contact-name" class="form-input" placeholder="e.g. Mother / John Doe" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-phone">Phone Number</label>
+            <input type="tel" id="contact-phone" class="form-input" placeholder="e.g. 9876543210" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact-relationship">Relationship</label>
+          <select id="contact-relationship" class="form-select" required>
+            <option value="Parent">Parent</option>
+            <option value="Spouse/Partner">Spouse / Partner</option>
+            <option value="Sibling">Sibling</option>
+            <option value="Friend">Friend</option>
+            <option value="Doctor/Physician">Doctor / Physician</option>
+            <option value="Colleague">Colleague</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+          <button type="button" id="cancel-contact-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="save-contact-btn" class="btn btn-primary">Save Contact</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contacts List -->
+    <div id="contacts-list" class="grid" style="grid-template-columns: 1fr;">
+      <p style="color: var(--text-muted);">Loading contacts...</p>
+    </div>
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/contacts.js"></script>
+</body>
+</html>

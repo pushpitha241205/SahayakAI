@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Command Center - Sahayak AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800; color: #f59e0b;">Admin Command Center</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">System-wide emergency monitoring and responder oversight.</p>
+      </div>
+      <button id="refresh-admin-btn" class="btn btn-secondary">🔄 Refresh Data</button>
+    </div>
+
+    <!-- Statistics Overview Grid -->
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      <div class="card" style="border-top: 4px solid #3b82f6;">
+        <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Total Users</span>
+        <h2 id="stat-total-users" style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem;">0</h2>
+      </div>
+
+      <div class="card" style="border-top: 4px solid #ef4444;">
+        <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Active Emergencies</span>
+        <h2 id="stat-active-em" style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem; color: #ef4444;">0</h2>
+      </div>
+
+      <div class="card" style="border-top: 4px solid #10b981;">
+        <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Resolved Emergencies</span>
+        <h2 id="stat-resolved-em" style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem; color: #10b981;">0</h2>
+      </div>
+
+      <div class="card" style="border-top: 4px solid #f59e0b;">
+        <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Total Incidents</span>
+        <h2 id="stat-total-em" style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem;">0</h2>
+      </div>
+    </div>
+
+    <!-- System Emergencies Feed -->
+    <div class="card" style="margin-top: 2rem;">
+      <div class="card-title">
+        <span>🚨 Real-Time Emergency Broadcast Log</span>
+      </div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--card-border); color: var(--text-muted);">
+              <th style="padding: 0.75rem;">ID</th>
+              <th style="padding: 0.75rem;">Type</th>
+              <th style="padding: 0.75rem;">Severity</th>
+              <th style="padding: 0.75rem;">Location</th>
+              <th style="padding: 0.75rem;">Status</th>
+              <th style="padding: 0.75rem;">Date & Time</th>
+              <th style="padding: 0.75rem;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-emergencies-tbody">
+            <tr><td colspan="7" style="padding: 1.5rem; text-align: center; color: var(--text-muted);">Loading incidents...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Registered Users Overview -->
+    <div class="card" style="margin-top: 2rem;">
+      <div class="card-title">
+        <span>👥 Registered User Directory</span>
+      </div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--card-border); color: var(--text-muted);">
+              <th style="padding: 0.75rem;">ID</th>
+              <th style="padding: 0.75rem;">Name</th>
+              <th style="padding: 0.75rem;">Email</th>
+              <th style="padding: 0.75rem;">Phone</th>
+              <th style="padding: 0.75rem;">Role</th>
+              <th style="padding: 0.75rem;">Emergency Contacts</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-tbody">
+            <tr><td colspan="6" style="padding: 1.5rem; text-align: center; color: var(--text-muted);">Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

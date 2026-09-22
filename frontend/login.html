@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Sahayak AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="container" style="max-width: 440px; margin-top: 3rem;">
+    <div class="card">
+      <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center;">Welcome Back</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; margin-bottom: 1.5rem;">
+        Sign in to manage your emergency contacts and profile.
+      </p>
+
+      <div id="alert-box" style="display: none; padding: 0.75rem; border-radius: 6px; font-size: 0.9rem; margin-bottom: 1.25rem;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="user@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Sign In
+        </button>
+      </form>
+
+      <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+        Don't have an account? <a href="/register.html" style="color: #60a5fa; text-decoration: none; font-weight: 600;">Register here</a>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--card-border); font-size: 0.8rem; color: var(--text-muted);">
+        <strong>Demo Admin:</strong> <code>admin@sahayak.ai</code> / <code>Admin@12345</code><br>
+        <strong>Demo User:</strong> <code>test@example.com</code> / <code>User@12345</code>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    const form = document.getElementById("login-form");
+    const alertBox = document.getElementById("alert-box");
+    const loginBtn = document.getElementById("login-btn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.style.display = "none";
+      loginBtn.disabled = true;
+      loginBtn.innerText = "Signing in...";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await API.login(email, password);
+        Auth.setAuth(res.access_token, res.user);
+        window.location.href = res.user.role === "admin" ? "/admin.html" : "/dashboard.html";
+      } catch (err) {
+        alertBox.style.display = "block";
+        alertBox.style.backgroundColor = "rgba(239, 68, 68, 0.2)";
+        alertBox.style.border = "1px solid #ef4444";
+        alertBox.style.color = "#f87171";
+        alertBox.innerText = err.message || "Failed to sign in. Please verify your credentials.";
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.innerText = "Sign In";
+      }
+    });
+  </script>
+</body>
+</html>

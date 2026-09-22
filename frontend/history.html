@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incident History - Sahayak AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="container">
+    <div style="margin-bottom: 1.5rem;">
+      <h1 style="font-size: 1.8rem; font-weight: 800;">Emergency Incident History</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Review past SOS alerts, AI analyses, and resolution outcomes.</p>
+    </div>
+
+    <!-- History List -->
+    <div id="history-container" class="grid" style="grid-template-columns: 1fr;">
+      <p style="color: var(--text-muted);">Loading emergency logs...</p>
+    </div>
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/history.js"></script>
+</body>
+</html>

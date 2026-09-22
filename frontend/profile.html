@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Sahayak AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="container" style="max-width: 500px;">
+    <div class="card">
+      <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem;">User Profile</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Keep your personal details current for rapid responder identification.
+      </p>
+
+      <div id="profile-alert" style="display: none; padding: 0.75rem; border-radius: 6px; font-size: 0.9rem; margin-bottom: 1.25rem;"></div>
+
+      <form id="profile-form">
+        <div class="form-group">
+          <label class="form-label" for="profile-name">Full Name</label>
+          <input type="text" id="profile-name" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="profile-email">Email (Immutable)</label>
+          <input type="email" id="profile-email" class="form-input" disabled style="opacity: 0.7; cursor: not-allowed;">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="profile-phone">Phone Number</label>
+          <input type="tel" id="profile-phone" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">System Role</label>
+          <div id="profile-role" style="font-weight: 600; color: #60a5fa; text-transform: uppercase;">User</div>
+        </div>
+
+        <button type="submit" id="save-profile-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+          Save Profile
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      Auth.requireAuth();
+      const alertBox = document.getElementById("profile-alert");
+      const nameInput = document.getElementById("profile-name");
+      const emailInput = document.getElementById("profile-email");
+      const phoneInput = document.getElementById("profile-phone");
+      const roleText = document.getElementById("profile-role");
+
+      try {
+        const user = await API.getProfile();
+        nameInput.value = user.name;
+        emailInput.value = user.email;
+        phoneInput.value = user.phone;
+        roleText.innerText = user.role;
+      } catch (err) {
+        alert("Failed to load user profile: " + err.message);
+      }
+
+      document.getElementById("profile-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        alertBox.style.display = "none";
+        const saveBtn = document.getElementById("save-profile-btn");
+        saveBtn.disabled = true;
+
+        try {
+          const updated = await API.updateProfile({
+            name: nameInput.value.trim(),
+            phone: phoneInput.value.trim()
+          });
+          Auth.setAuth(Auth.getToken(), updated);
+          alertBox.style.display = "block";
+          alertBox.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
+          alertBox.style.border = "1px solid #10b981";
+          alertBox.style.color = "#34d399";
+          alertBox.innerText = "Profile details updated successfully!";
+        } catch (err) {
+          alertBox.style.display = "block";
+          alertBox.style.backgroundColor = "rgba(239, 68, 68, 0.2)";
+          alertBox.style.border = "1px solid #ef4444";
+          alertBox.style.color = "#f87171";
+          alertBox.innerText = err.message || "Failed to update profile.";
+        } finally {
+          saveBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

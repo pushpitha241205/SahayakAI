@@ -1,0 +1,22 @@
+{
+  "name": "Sahayak AI - Real-Time Emergency Assistant",
+  "short_name": "Sahayak AI",
+  "description": "Real-Time Help for People in Trouble - Personal Emergency & Proactive Safety Monitoring Assistant",
+  "start_url": "/dashboard.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#dc2626",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1022/1022382.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1022/1022382.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
